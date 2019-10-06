@@ -48,6 +48,7 @@ int main()
 		uintptr_t mainModule = getmoduleaddress(csgo, (char*)"csgo.exe");
 		printf("csgo.exe: 0x%" PRIXXX "\n", mainModule);
 		uintptr_t client_panorama = getmoduleaddress(csgo, (char*)"client_panorama.dll");
+		uintptr_t engine = getmoduleaddress(csgo, (char*)"engine.dll");
 
 		printf("client_panorama.dll: 0x%" PRIXXX "\n", client_panorama);
 		//ProcessAddress playerXtmp = ProcessAddress(csgo,0x3CF3D4C);
@@ -58,11 +59,13 @@ int main()
 		uintptr_t plzOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x154 };
 		ProcessAddress playerZ = ProcessAddress(csgo, client_panorama, plzOffsets, 5);
 		
-
+		uintptr_t pitchOffsets[2] = { 0x590D8C, 0x4D88 };
+		ProcessAddress playerPitch = ProcessAddress(csgo, engine, pitchOffsets ,2);
+		ProcessAddress playerYaw = ProcessAddress(csgo, playerPitch.getAddress()+0x4);
 
 		while (true)
 		{
-			printf("\rPlayer: %f %f %f ", playerX.read<float>(), playerY.read<float>(), playerZ.read<float>());
+			printf("\rPlayer: (%f %f) (%f %f %f) ", playerYaw.read<float>(), playerPitch.read<float>(), playerX.read<float>(), playerY.read<float>(), playerZ.read<float>());
 			Sleep(500);
 		}
 
