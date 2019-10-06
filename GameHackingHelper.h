@@ -244,6 +244,11 @@ public:
 		return WriteProcessMemory(processHandle, (void*)(address), &value, sizeof(T), 0);
 	}
 
+	uintptr_t getAddress()
+	{
+		return address;
+	}
+
 private:
 
 };
