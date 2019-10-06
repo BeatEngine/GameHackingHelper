@@ -221,6 +221,12 @@ public:
 		address = 0;
 	}
 
+	void load(HANDLE processHandle, uintptr_t address)
+	{
+		this->processHandle = processHandle;
+		this->address = address;
+	}
+
 	template<class T> T read()
 	{
 		if (address == 0)
