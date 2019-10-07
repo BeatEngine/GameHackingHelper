@@ -39,12 +39,18 @@
 
 #define pow2(X) (X)*(X)
 
+#define posf(X) sqrt((X)*(X))
 
-void aimToNearest(float playerX, float playerY, float playerZ, float* entX, float* entY, float* entZ, int entities, float* yaw, float* pitch)
+
+void aimToNearest(float playerX, float playerY, float playerZ, float* entX, float* entY, float* entZ, int entities, float* yaw, float* pitch, int mode)
 {
 	float dist;
 	int n = 0;
-	float nd = 999;
+	float nd = 2000;
+
+	float yawc = 0;
+	float pitchc = 0;
+
 	for (int i = 0; i < entities; i++)
 	{
 		dist = sqrt(pow2(entX[i] - playerX) + pow2(entY[i] - playerY) + pow2(entZ[i] - playerZ));
@@ -52,36 +58,54 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 		{
 			if (dist < nd)
 			{
-				nd = dist;
+				
 				n = i;
+
+				float x = entX[n] - playerX;
+				float y = entY[n] - playerY;
+				float z = entZ[n] - playerZ;
+				yawc = 0;
+				pitchc = 0;
+
+
+				yawc = acosf(x / sqrtf(x*x + y * y));
+				pitchc = asinf(z / dist);
+
+				yawc = yawc / 3.141592 * 180;
+				pitchc = pitchc / 3.141592 * 180;
+
+				if (mode == 1)
+				{
+					//pitchc += 688.6f / dist;
+					yawc -= 187.97f / dist;
+				}
+				else if (mode == 2)
+				{
+					pitchc -= 3;
+				}
+
+				if (y < 0)
+				{
+					yawc = -yawc;
+				}
+
+				pitchc = -pitchc;
+
+				if (yawc<360 && pitchc<180 && yawc>-190 && pitchc>-90&&dist<1999)
+				{
+					if (posf(*yaw - yawc) < 28)
+					{
+						if (posf(*pitch - pitchc) < 28)
+						{
+							nd = dist;
+							*yaw = yawc;
+							*pitch = pitchc;
+						}
+					}
+				}
+
 			}
 		}
-	}
-
-	float x = entX[n] - playerX;
-	float y = entY[n] - playerY;
-	float z = entZ[n] - playerZ;
-	float yawc = 0;
-	float pitchc = 0;
-
-
-	yawc = acosf(x / sqrtf(x*x + y*y));
-	pitchc = asinf(z / nd);
-
-	yawc = yawc / 3.141592 * 180;
-	pitchc = pitchc / 3.141592 * 180;
-
-	if (y<0)
-	{
-		yawc = -yawc;
-	}
-
-	pitchc = -pitchc;
-	
-	if (nd < 999)
-	{
-		*yaw = yawc;
-		*pitch = pitchc;
 	}
 	
 
@@ -104,34 +128,35 @@ int main()
 		printf("engine.dll: 0x%" PRIXXX "\n", engine);
 		printf("server.dll: 0x%" PRIXXX "\n", server);
 		//ProcessAddress playerXtmp = ProcessAddress(csgo,0x3CF3D4C);
-		uintptr_t plxOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x14C };
-		ProcessAddress playerX = ProcessAddress(csgo, client_panorama, plxOffsets, 5);
-		uintptr_t plyOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x150 };
-		ProcessAddress playerY = ProcessAddress(csgo, client_panorama, plyOffsets, 5);
-		uintptr_t plzOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x154 };
-		ProcessAddress playerZ = ProcessAddress(csgo, client_panorama, plzOffsets, 5);
 		
-		uintptr_t pitchOffsets[2] = { 0x590D8C, 0x4D88 };
-		ProcessAddress playerPitch = ProcessAddress(csgo, engine, pitchOffsets ,2);
-		ProcessAddress playerYaw = ProcessAddress(csgo, playerPitch.getAddress()+0x4);
-
-		uintptr_t entitybaseoffset[1] = { 0xA7BF34 };
-		ProcessAddress firstEntityX = ProcessAddress(csgo, server + 0xA7BF34);
-
-		float entX[10] = { 0 };
-		float entY[10] = { 0 };
-		float entZ[10] = { 0 };
-		int i = 0;
-		float px;
-		float py;
-		float pz;
-
-		float yaw;
-		float pitch;
-
-		ProcessAddress EntityTmp = ProcessAddress(csgo, firstEntityX.getAddress() + i * 0x24);
 		while (true)
 		{
+			uintptr_t plxOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x14C };
+			ProcessAddress playerX = ProcessAddress(csgo, client_panorama, plxOffsets, 5);
+			uintptr_t plyOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x150 };
+			ProcessAddress playerY = ProcessAddress(csgo, client_panorama, plyOffsets, 5);
+			uintptr_t plzOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x154 };
+			ProcessAddress playerZ = ProcessAddress(csgo, client_panorama, plzOffsets, 5);
+
+			uintptr_t pitchOffsets[2] = { 0x590D8C, 0x4D88 };
+			ProcessAddress playerPitch = ProcessAddress(csgo, engine, pitchOffsets, 2);
+			ProcessAddress playerYaw = ProcessAddress(csgo, playerPitch.getAddress() + 0x4);
+
+			uintptr_t entitybaseoffset[1] = { 0xA7BF34 };
+			ProcessAddress firstEntityX = ProcessAddress(csgo, server + 0xA7BF34);
+
+			float entX[10] = { 0 };
+			float entY[10] = { 0 };
+			float entZ[10] = { 0 };
+			int i = 0;
+			float px;
+			float py;
+			float pz;
+
+			float yaw;
+			float pitch;
+
+			ProcessAddress EntityTmp = ProcessAddress(csgo, firstEntityX.getAddress() + i * 0x24);
 			for (i = 0; i < 10; i++)
 			{
 				EntityTmp.load(csgo, firstEntityX.getAddress() + i * 0x24);
@@ -162,7 +187,7 @@ int main()
 
 			if (GetAsyncKeyState(VK_MBUTTON))
 			{
-				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch);
+				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch,1);
 				printf(" calc: (%f %f)      ", yaw, pitch);
 				playerPitch.write<float>(pitch);
 				playerYaw.write<float>(yaw);
@@ -173,7 +198,7 @@ int main()
 			}
 			if (GetAsyncKeyState(VK_LBUTTON))
 			{
-				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch);
+				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch,1);
 				printf(" calc: (%f %f)      ", yaw, pitch);
 				playerPitch.write<float>(pitch);
 				playerYaw.write<float>(yaw);
