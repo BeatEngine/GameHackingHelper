@@ -44,11 +44,11 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 {
 	float dist;
 	int n = 0;
-	float nd = 99999999999;
+	float nd = 999;
 	for (int i = 0; i < entities; i++)
 	{
 		dist = sqrt(pow2(entX[i] - playerX) + pow2(entY[i] - playerY) + pow2(entZ[i] - playerZ));
-		if (dist > 0.1)
+		if (dist > 2)
 		{
 			if (dist < nd)
 			{
@@ -59,30 +59,31 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 	}
 
 	float x = entX[n] - playerX;
-	float y = entX[n] - playerX;
-	float z = entX[n] - playerX;
-	float yawc;
-	float pitchc;
+	float y = entY[n] - playerY;
+	float z = entZ[n] - playerZ;
+	float yawc = 0;
+	float pitchc = 0;
 
-	yawc = acosf(y / (sqrt(pow2(x) + pow2(y))));
-	pitchc = acosf(y / (pow2(z)));
+
+	yawc = acosf(x / sqrtf(x*x + y*y));
+	pitchc = asinf(z / nd);
 
 	yawc = yawc / 3.141592 * 180;
 	pitchc = pitchc / 3.141592 * 180;
 
-	if (yawc > 180)
+	if (y<0)
 	{
-		yawc -= 180;
 		yawc = -yawc;
 	}
 
-	if (pitchc > 90)
+	pitchc = -pitchc;
+	
+	if (nd < 999)
 	{
-		pitchc -= 90;
-		pitchc = -pitchc;
+		*yaw = yawc;
+		*pitch = pitchc;
 	}
-	*yaw = yawc;
-	*pitch = pitchc;
+	
 
 }
 
@@ -159,17 +160,26 @@ int main()
 			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");*/
 
 
-			if (GetAsyncKeyState(0x51))
+			if (GetAsyncKeyState(VK_MBUTTON))
 			{
 				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch);
+				printf(" calc: (%f %f)      ", yaw, pitch);
 				playerPitch.write<float>(pitch);
 				playerYaw.write<float>(yaw);
-				while (GetAsyncKeyState(0x51))
+				while (GetAsyncKeyState(VK_MBUTTON))
 				{
 					Sleep(1);
 				}
 			}
-			Sleep(50);
+			if (GetAsyncKeyState(VK_LBUTTON))
+			{
+				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch);
+				printf(" calc: (%f %f)      ", yaw, pitch);
+				playerPitch.write<float>(pitch);
+				playerYaw.write<float>(yaw);
+				Sleep(1);
+			}
+			Sleep(10);
 		}
 
 	detach(csgo);
