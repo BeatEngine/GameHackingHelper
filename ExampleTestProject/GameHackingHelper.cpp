@@ -51,61 +51,60 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 	float yawc = 0;
 	float pitchc = 0;
 
+	float angbefy = 9999;
+	float angbefp = 9999;
+
+	float preyaw = *yaw;
+	float prepitch = *pitch;
+
+
+
+
 	for (int i = 0; i < entities; i++)
 	{
 		dist = sqrt(pow2(entX[i] - playerX) + pow2(entY[i] - playerY) + pow2(entZ[i] - playerZ));
-		if (dist > 2)
+
+
+
+	
+		n = i;
+
+		float x = entX[n] - playerX;
+		float y = entY[n] - playerY -7;
+		float z = entZ[n] - playerZ;
+		yawc = 0;
+		pitchc = 0;
+
+
+		yawc = acosf(x / sqrtf(x*x + y * y));
+		pitchc = asinf(z / dist);
+
+		yawc = yawc / 3.141592 * 180;
+		pitchc = pitchc / 3.141592 * 180;
+
+
+		if (y < 0)
 		{
-			if (dist < nd)
+			yawc = -yawc;
+		}
+
+		pitchc = -pitchc;
+
+		if (dist<1999&&dist>2)
+		{
+			if (posf(preyaw - yawc) < angbefy && posf(preyaw - yawc) < 60)
 			{
-				
-				n = i;
-
-				float x = entX[n] - playerX;
-				float y = entY[n] - playerY;
-				float z = entZ[n] - playerZ;
-				yawc = 0;
-				pitchc = 0;
-
-
-				yawc = acosf(x / sqrtf(x*x + y * y));
-				pitchc = asinf(z / dist);
-
-				yawc = yawc / 3.141592 * 180;
-				pitchc = pitchc / 3.141592 * 180;
-
-				if (mode == 1)
+				if (posf(prepitch - pitchc) < angbefp)
 				{
-					//pitchc += 688.6f / dist;
-					yawc -= 187.97f / dist;
+					angbefy = posf(preyaw - yawc);
+					angbefp = posf(prepitch - pitchc);
+					nd = dist;
+					*yaw = yawc;
+					*pitch = pitchc;
 				}
-				else if (mode == 2)
-				{
-					pitchc -= 3;
-				}
-
-				if (y < 0)
-				{
-					yawc = -yawc;
-				}
-
-				pitchc = -pitchc;
-
-				if (yawc<360 && pitchc<180 && yawc>-190 && pitchc>-90&&dist<1999)
-				{
-					if (posf(*yaw - yawc) < 28)
-					{
-						if (posf(*pitch - pitchc) < 28)
-						{
-							nd = dist;
-							*yaw = yawc;
-							*pitch = pitchc;
-						}
-					}
-				}
-
 			}
 		}
+
 	}
 	
 
