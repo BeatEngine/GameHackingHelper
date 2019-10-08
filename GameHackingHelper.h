@@ -221,6 +221,42 @@ public:
 		address = 0;
 	}
 
+	bool loadByModulePattern(HANDLE processHandle, uintptr_t moduleBaseAddress, unsigned char* pattern, int length)
+	{
+		this->processHandle = processHandle;
+		unsigned char tmp = 0;
+		uintptr_t addr = moduleBaseAddress;
+		int i;
+		unsigned char* arr = (unsigned char*)calloc(length, sizeof(char));
+		while (ReadProcessMemory(processHandle, (void*)addr, &tmp, sizeof(char), 0))
+		{
+			if (tmp == pattern[0])
+			{
+				if (ReadProcessMemory(processHandle, (void*)addr, arr, sizeof(char)*length, 0))
+				{
+					i = 0;
+					for (i = 0; i < length; i++)
+					{
+						if (arr[i]!=pattern[i])
+						{
+							i = 0;
+							break;
+						}
+					}
+					if (i != 0)
+					{
+						this->address = addr;
+						free(arr);
+						return true;
+					}
+				}
+			}
+			addr++;
+		}
+		free(arr);
+		return false;
+	}
+
 	void load(HANDLE processHandle, uintptr_t address)
 	{
 		this->processHandle = processHandle;
