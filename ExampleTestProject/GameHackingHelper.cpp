@@ -119,30 +119,53 @@ int main()
 
 		uintptr_t mainModule = getmoduleaddress(csgo, (char*)"csgo.exe");
 		printf("csgo.exe: 0x%" PRIXXX "\n", mainModule);
-		uintptr_t client_panorama = getmoduleaddress(csgo, (char*)"client_panorama.dll");
+		//uintptr_t client_panorama = getmoduleaddress(csgo, (char*)"client_panorama.dll");
 		uintptr_t engine = getmoduleaddress(csgo, (char*)"engine.dll");
 		uintptr_t server = getmoduleaddress(csgo, (char*)"server.dll");
+		printf("Loading Baseaddresses by patterns wait a minute!\n");
+		ProcessAddress PlayerServerBase = ProcessAddress(csgo);
+		unsigned char pservpatt[] = {0xD0, 0x8E, 0x2D, 0x4E, 0xFA, 0x76};
+		if (!PlayerServerBase.loadByModulePattern(csgo, server, pservpatt, 6))
+		{
+			printf("Could not find PlayerServerBase!");
+			return 0;
+		}
+		ProcessAddress PlayerEngineBase = ProcessAddress(csgo);
+		unsigned char pengpatt[] = { 0xD0, 0x53, 0x74, 0x11, 0x90, 0xE8, 0x85, 0x11, 0x01};
+		if (!PlayerEngineBase.loadByModulePattern(csgo, engine, pengpatt, 9))
+		{
+			printf("Could not find PlayerEngineBase!");
+			return 0;
+		}
+		ProcessAddress EntityListBase = ProcessAddress(csgo);
+		unsigned char elstpatt[] = { 0x74, 0x72, 0x7D, 0x68, 0x00, 0x00};
+		if (!EntityListBase.loadByModulePattern(csgo, server, elstpatt, 6))
+		{
+			printf("Could not find EntityListBase!");
+			return 0;
+		}
 
-		printf("client_panorama.dll: 0x%" PRIXXX "\n", client_panorama);
+
+
+		//printf("client_panorama.dll: 0x%" PRIXXX "\n", client_panorama);
 		printf("engine.dll: 0x%" PRIXXX "\n", engine);
 		printf("server.dll: 0x%" PRIXXX "\n", server);
+
+		printf("PlayerServerBase: 0x%" PRIXXX "\n", PlayerServerBase.getAddress());
+		printf("PlayerEngineBase: 0x%" PRIXXX "\n", PlayerEngineBase.getAddress());
+		printf("EntityListBase: 0x%" PRIXXX "\n", EntityListBase.getAddress());
+
 		//ProcessAddress playerXtmp = ProcessAddress(csgo,0x3CF3D4C);
 		
 		while (true)
 		{
-			uintptr_t plxOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x14C };
-			ProcessAddress playerX = ProcessAddress(csgo, client_panorama, plxOffsets, 5);
-			uintptr_t plyOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x150 };
-			ProcessAddress playerY = ProcessAddress(csgo, client_panorama, plyOffsets, 5);
-			uintptr_t plzOffsets[5] = { 0xCF7A4C, 0x24, 0x38, 0x568, 0x154 };
-			ProcessAddress playerZ = ProcessAddress(csgo, client_panorama, plzOffsets, 5);
+			ProcessAddress playerX = ProcessAddress(csgo, PlayerServerBase.read<uintptr_t>() + 0x1DC);
+			ProcessAddress playerY = ProcessAddress(csgo, PlayerServerBase.read<uintptr_t>() + 0x1E0);
+			ProcessAddress playerZ = ProcessAddress(csgo, PlayerServerBase.read<uintptr_t>() + 0x1E4);
+			ProcessAddress playerPitch = ProcessAddress(csgo, PlayerEngineBase.read<uintptr_t>() + 0x4D88);
+			ProcessAddress playerYaw = ProcessAddress(csgo, PlayerEngineBase.read<uintptr_t>() + 0x4D8C);
 
-			uintptr_t pitchOffsets[2] = { 0x590D8C, 0x4D88 };
-			ProcessAddress playerPitch = ProcessAddress(csgo, engine, pitchOffsets, 2);
-			ProcessAddress playerYaw = ProcessAddress(csgo, playerPitch.getAddress() + 0x4);
-
-			uintptr_t entitybaseoffset[1] = { 0xA7BF34 };
-			ProcessAddress firstEntityX = ProcessAddress(csgo, server + 0xA7BF34);
+			ProcessAddress firstEntityX = ProcessAddress(csgo, EntityListBase.getAddress() + 0x33C);
 
 			float entX[10] = { 0 };
 			float entY[10] = { 0 };
@@ -154,8 +177,8 @@ int main()
 
 			float yaw;
 			float pitch;
-
-			ProcessAddress EntityTmp = ProcessAddress(csgo, firstEntityX.getAddress() + i * 0x24);
+			
+			ProcessAddress EntityTmp = ProcessAddress(csgo);
 			for (i = 0; i < 10; i++)
 			{
 				EntityTmp.load(csgo, firstEntityX.getAddress() + i * 0x24);
@@ -172,6 +195,7 @@ int main()
 			yaw = playerYaw.read<float>();
 			pitch = playerPitch.read<float>();
 			printf("\rPlayer: (%f %f) (%f %f %f) ",yaw, pitch, px, py, pz);
+			//printf("First entity: 0x%" PRIXXX "", firstEntityX.getAddress());
 			
 			/*for (i = 0; i < 10; i++)
 			{

@@ -2,77 +2,33 @@
 <CheatTable CheatEngineTableVersion="29">
   <CheatEntries>
     <CheatEntry>
-      <ID>1</ID>
-      <Description>"Player X"</Description>
-      <VariableType>Float</VariableType>
-      <Address>"client_panorama.dll"+00CF7A4C</Address>
-      <Offsets>
-        <Offset>14C</Offset>
-        <Offset>568</Offset>
-        <Offset>38</Offset>
-        <Offset>24</Offset>
-      </Offsets>
+      <ID>375</ID>
+      <Description>"PlayerEngineBase"</Description>
+      <LastState Value="117453D0" RealAddress="70170D8C"/>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>EPbase</Address>
     </CheatEntry>
     <CheatEntry>
-      <ID>3</ID>
-      <Description>"Player Y"</Description>
-      <VariableType>Float</VariableType>
-      <Address>"client_panorama.dll"+00CF7A4C</Address>
-      <Offsets>
-        <Offset>150</Offset>
-        <Offset>568</Offset>
-        <Offset>38</Offset>
-        <Offset>24</Offset>
-      </Offsets>
+      <ID>370</ID>
+      <Description>"PlayerBase"</Description>
+      <LastState Value="4E2D8ED0" RealAddress="6899117C"/>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>server.dll+A2117C</Address>
     </CheatEntry>
     <CheatEntry>
-      <ID>2</ID>
-      <Description>"Player Z"</Description>
-      <VariableType>Float</VariableType>
-      <Address>"client_panorama.dll"+00CF7A4C</Address>
-      <Offsets>
-        <Offset>154</Offset>
-        <Offset>568</Offset>
-        <Offset>38</Offset>
-        <Offset>24</Offset>
-      </Offsets>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>4</ID>
-      <Description>"ReadCopy Player yaw"</Description>
-      <VariableType>Float</VariableType>
-      <Address>"client_panorama.dll"+00CF7A4C</Address>
-      <Offsets>
-        <Offset>144</Offset>
-        <Offset>568</Offset>
-        <Offset>38</Offset>
-        <Offset>24</Offset>
-      </Offsets>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>5</ID>
-      <Description>"ReadCopy Player pitch"</Description>
-      <VariableType>Float</VariableType>
-      <Address>"client_panorama.dll"+00CF7A4C</Address>
-      <Offsets>
-        <Offset>140</Offset>
-        <Offset>568</Offset>
-        <Offset>38</Offset>
-        <Offset>24</Offset>
-      </Offsets>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>119</ID>
-      <Description>"Player pitch"</Description>
-      <VariableType>Float</VariableType>
-      <Address>engine.dll+590D8C</Address>
-      <Offsets>
-        <Offset>4D88</Offset>
-      </Offsets>
+      <ID>372</ID>
+      <Description>"PlayerBase"</Description>
+      <LastState Value="4E2D8ED0" RealAddress="6899117C"/>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Pbase</Address>
     </CheatEntry>
     <CheatEntry>
       <ID>120</ID>
       <Description>"Player yaw"</Description>
+      <LastState Value="-176.8202057" RealAddress="1174A15C"/>
       <VariableType>Float</VariableType>
       <Address>engine.dll+590D8C</Address>
       <Offsets>
@@ -80,148 +36,308 @@
       </Offsets>
     </CheatEntry>
     <CheatEntry>
+      <ID>119</ID>
+      <Description>"Player pitch"</Description>
+      <LastState Value="-11.63589096" RealAddress="1174A158"/>
+      <VariableType>Float</VariableType>
+      <Address>engine.dll+590D8C</Address>
+      <Offsets>
+        <Offset>4D88</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>367</ID>
+      <Description>"Player Z"</Description>
+      <LastState Value="83.74510193" RealAddress="4E2D90B4"/>
+      <VariableType>Float</VariableType>
+      <Address>server.dll+A2117C</Address>
+      <Offsets>
+        <Offset>1E4</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>368</ID>
+      <Description>"Player Y"</Description>
+      <LastState Value="-808" RealAddress="4E2D90B0"/>
+      <VariableType>Float</VariableType>
+      <Address>server.dll+A2117C</Address>
+      <Offsets>
+        <Offset>1E0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>373</ID>
+      <Description>"Player X"</Description>
+      <LastState Value="-367" RealAddress="4E2D90AC"/>
+      <VariableType>Float</VariableType>
+      <Address>server.dll+A2117C</Address>
+      <Offsets>
+        <Offset>1DC</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>369</ID>
+      <Description>"Player X"</Description>
+      <LastState Value="-367" RealAddress="4E2D90AC"/>
+      <VariableType>Float</VariableType>
+      <Address>server.dll+A2117C</Address>
+      <Offsets>
+        <Offset>1DC</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>380</ID>
+      <Description>"Player X"</Description>
+      <LastState Value="-367" RealAddress="4E2D90AC"/>
+      <VariableType>Float</VariableType>
+      <Address>Pbase</Address>
+      <Offsets>
+        <Offset>1DC</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>365</ID>
+      <Description>"No description"</Description>
+      <LastState Value="83.74510193" RealAddress="4E2D90B4"/>
+      <VariableType>Float</VariableType>
+      <Address>4E2D90B4</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>374</ID>
+      <Description>"Get Player Engine Base by pattern"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : csgo.exe
+  Version: 
+  Date   : 2019-10-08
+  Author : David
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(EPbase,engine.dll,D0 53 74 11 90 E8 85 11 01) // should be unique
+
+registersymbol(EPbase)
+
+[DISABLE]
+
+unregistersymbol(EPbase)
+{
+// ORIGINAL CODE - INJECTION POINT: "engine.dll"+590D8C
+
+"engine.dll"+590D6F: 00 00                          -  add [eax],al
+"engine.dll"+590D71: 00 00                          -  add [eax],al
+"engine.dll"+590D73: 00 A0 C9 DC 02 08              -  add [eax+0802DCC9],ah
+"engine.dll"+590D79: 00 00                          -  add [eax],al
+"engine.dll"+590D7B: 00 00                          -  add [eax],al
+"engine.dll"+590D7D: 00 00                          -  add [eax],al
+"engine.dll"+590D7F: 00 01                          -  add [ecx],al
+"engine.dll"+590D81: 00 00                          -  add [eax],al
+"engine.dll"+590D83: 00 A0 C9 DC 02 14              -  add [eax+1402DCC9],ah
+"engine.dll"+590D89: 67 05 70                       - db 67 05 70  // SHORTENED TO HIT INJECTION FROM:  add eax,7453D070
+// ---------- INJECTING HERE ----------
+"engine.dll"+590D8C: D0 53 74                       -  rcl byte ptr [ebx+74],1
+"engine.dll"+590D8F: 11 90 E8 85 11 01              -  adc [eax+011185E8],edx
+// ---------- DONE INJECTING  ----------
+"engine.dll"+590D95: 00 00                          -  add [eax],al
+"engine.dll"+590D97: 00 01                          -  add [ecx],al
+"engine.dll"+590D99: 00 00                          -  add [eax],al
+"engine.dll"+590D9B: 00 00                          -  add [eax],al
+"engine.dll"+590D9D: 00 00                          -  add [eax],al
+"engine.dll"+590D9F: 00 5C 9B 0A                    -  add [ebx+ebx*4+0A],bl
+"engine.dll"+590DA3: 70 F8                          -  jo engine.dll+590D9D
+"engine.dll"+590DA5: 0D 17 70 01 00                 -  or eax,00017017
+"engine.dll"+590DAA: 00 00                          -  add [eax],al
+"engine.dll"+590DAC: 44                             -  inc esp
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>371</ID>
+      <Description>"Get Player Base by pattern"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : csgo.exe
+  Version: 
+  Date   : 2019-10-08
+  Author : David
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(Pbase,server.dll,D0 8E 2D 4E FA 76) // should be unique
+registersymbol(Pbase)
+
+[DISABLE]
+
+unregistersymbol(Pbase)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "server.dll"+A2117C
+
+"server.dll"+A21166: EC                       -  in al,dx
+"server.dll"+A21167: 07                       -  pop es
+"server.dll"+A21168: F7 71 00                 -  div [ecx+00]
+"server.dll"+A2116B: 00 00                    -  add [eax],al
+"server.dll"+A2116D: 00 00                    -  add [eax],al
+"server.dll"+A2116F: 00 7C 17 99              -  add [edi+edx-67],bh
+"server.dll"+A21173: 68 00 00 00 00           -  push 00000000
+"server.dll"+A21178: 50                       -  push eax
+"server.dll"+A21179: 4D                       -  dec ebp
+"server.dll"+A2117A: 76 06                    -  jna server.dll+A21182
+// ---------- INJECTING HERE ----------
+"server.dll"+A2117C: D0 8E 2D 4E FA 76        -  ror byte ptr [esi+KERNELBASE.dll+174E2D],1
+// ---------- DONE INJECTING  ----------
+"server.dll"+A21182: 00 00                    -  add [eax],al
+"server.dll"+A21184: C4 2C 99 68 04 2C        -  push 2C04
+"server.dll"+A2118A: 99                       -  cdq 
+"server.dll"+A2118B: 68 00 00 00 00           -  push 00000000
+"server.dll"+A21190: 80 AC 6E 08 40 9E 65 52  -  sub byte ptr [esi+ebp*2+659E4008],52
+"server.dll"+A21198: B7 72                    -  mov bh,72
+"server.dll"+A2119A: 00 00                    -  add [eax],al
+"server.dll"+A2119C: DC 2C 99                 -  fsubr qword ptr [ecx+ebx*4]
+"server.dll"+A2119F: 68 54 2D 99 68           -  push server.dll+A22D54
+"server.dll"+A211A4: 00 00                    -  add [eax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>376</ID>
+      <Description>"Get Entity List Base by pattern"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : csgo.exe
+  Version: 
+  Date   : 2019-10-08
+  Author : David
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(ENTlistBase,server.dll,74 72 7D 68 00 00) // should be unique
+
+
+registersymbol(ENTlistBase)
+
+[DISABLE]
+
+unregistersymbol(ENTlistBase)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: "server.dll"+A7CC88
+
+"server.dll"+A7CC71: A9 9C 45 00 00     -  test eax,0000459C
+"server.dll"+A7CC76: 00 00              -  add [eax],al
+"server.dll"+A7CC78: 00 00              -  add [eax],al
+"server.dll"+A7CC7A: 00 00              -  add [eax],al
+"server.dll"+A7CC7C: 00 00              -  add [eax],al
+"server.dll"+A7CC7E: 00 00              -  add [eax],al
+"server.dll"+A7CC80: 00 00              -  add [eax],al
+"server.dll"+A7CC82: 00 00              -  add [eax],al
+"server.dll"+A7CC84: 00 00              -  add [eax],al
+"server.dll"+A7CC86: 00 00              -  add [eax],al
+// ---------- INJECTING HERE ----------
+"server.dll"+A7CC88: 74 72              -  je server.dll+A7CCFC
+"server.dll"+A7CC8A: 7D 68              -  jnl server.dll+A7CCF4
+"server.dll"+A7CC8C: 00 00              -  add [eax],al
+// ---------- DONE INJECTING  ----------
+"server.dll"+A7CC8E: 00 00              -  add [eax],al
+"server.dll"+A7CC90: 38 1D 94 68 00 00  -  cmp [00006894],bl
+"server.dll"+A7CC96: 00 00              -  add [eax],al
+"server.dll"+A7CC98: 00 00              -  add [eax],al
+"server.dll"+A7CC9A: 00 00              -  add [eax],al
+"server.dll"+A7CC9C: 00 00              -  add [eax],al
+"server.dll"+A7CC9E: 00 00              -  add [eax],al
+"server.dll"+A7CCA0: 56                 -  push esi
+"server.dll"+A7CCA1: 43                 -  inc ebx
+"server.dll"+A7CCA2: A9 3C 88 61 7F     -  test eax,7F61883C
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>379</ID>
+      <Description>"FirstX"</Description>
+      <VariableType>Float</VariableType>
+      <Address>ENTlistBase+33C+24*0</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>377</ID>
+      <Description>"Entlistbase"</Description>
+      <LastState Value="1753051764" RealAddress="689ECC88"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>server.dll+A7CC88</Address>
+    </CheatEntry>
+    <CheatEntry>
       <ID>121</ID>
-      <Description>"EntX"</Description>
+      <Description>"EntX0 +24*i"</Description>
+      <LastState Value="-367" RealAddress="689ECFC4"/>
       <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF7C</Address>
+      <Address>server.dll+A7CFC4+24*0</Address>
     </CheatEntry>
     <CheatEntry>
-      <ID>122</ID>
-      <Description>"EntY"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF80</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>123</ID>
-      <Description>"EntZ"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF84</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>124</ID>
-      <Description>"Ent0X +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF34+0*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>125</ID>
-      <Description>"Ent0Y +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF38+0*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>126</ID>
-      <Description>"Ent0Z +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF3C+0*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>127</ID>
-      <Description>"Ent1X +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF34+1*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>128</ID>
-      <Description>"Ent1Y +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF38+1*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>129</ID>
-      <Description>"Ent1Z +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF3C+1*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>130</ID>
-      <Description>"Ent9X +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF34+9*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>131</ID>
-      <Description>"Ent9Y +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF38+9*24</Address>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>132</ID>
-      <Description>"Ent9Z +i*0x24"</Description>
-      <VariableType>Float</VariableType>
-      <Address>server.dll+A7BF3C+9*24</Address>
+      <ID>378</ID>
+      <Description>"ENTLB"</Description>
+      <LastState Value="1753051764" RealAddress="689ECC88"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>ENTlistBase</Address>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
   <Structures StructVersion="2">
-    <Structure Name="ent" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+    <Structure Name="unnamed structure" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements/>
+    </Structure>
+    <Structure Name="ddd" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
       <Elements>
-        <Element Offset="0" Vartype="Float" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="8" Vartype="Float" Bytesize="4" DisplayMethod="Signed Integer"/>
-        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="36" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="40" Vartype="Float" Bytesize="4" DisplayMethod="Signed Integer"/>
-        <Element Offset="44" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="48" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="72" Vartype="Float" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="84" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="108" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="112" Vartype="Float" Bytesize="4" DisplayMethod="Signed Integer"/>
-        <Element Offset="116" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="120" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="144" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="148" Vartype="Double" Bytesize="8" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="156" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="180" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="184" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="188" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="192" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="216" Vartype="Float" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="228" Vartype="4 Bytes" Bytesize="4" RLECount="6" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="252" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="256" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="260" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="264" Vartype="4 Bytes" Bytesize="4" RLECount="624" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2760" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2764" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2768" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2772" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2776" Vartype="Byte" Bytesize="1" RLECount="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2780" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2788" Vartype="Byte" Bytesize="1" RLECount="8" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2796" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2804" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2808" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2812" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2816" Vartype="4 Bytes" Bytesize="4" RLECount="18" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2888" Vartype="Byte" Bytesize="1" RLECount="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2892" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="2896" Vartype="4 Bytes" Bytesize="4" RLECount="43" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3068" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3072" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3076" Vartype="Pointer" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3084" Vartype="4 Bytes" Bytesize="4" RLECount="19" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3160" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3164" Vartype="Byte" Bytesize="1" RLECount="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3168" Vartype="4 Bytes" Bytesize="4" RLECount="11" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3212" Vartype="Pointer" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3220" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3228" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Hexadecimal"/>
-        <Element Offset="3236" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3240" Vartype="4 Bytes" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3252" Vartype="Byte" Bytesize="1" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3253" Vartype="String" Bytesize="5" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3258" Vartype="Byte" Bytesize="1" RLECount="2" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3260" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3264" Vartype="String" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3268" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3272" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3276" Vartype="String" Bytesize="5" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3281" Vartype="Byte" Bytesize="1" RLECount="3" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="3284" Vartype="4 Bytes" Bytesize="4" RLECount="203" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="0" Vartype="Float" Bytesize="4" RLECount="139" DisplayMethod="Signed Integer"/>
+        <Element Offset="560" Vartype="Float" Bytesize="4" RLECount="12" DisplayMethod="Signed Integer"/>
+        <Element Offset="612" Vartype="Float" Bytesize="4" RLECount="34" DisplayMethod="Signed Integer"/>
+        <Element Offset="748" Vartype="4 Bytes" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="760" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="764" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="768" Vartype="4 Bytes" Bytesize="4" RLECount="9" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="804" Vartype="Pointer" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="816" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Hexadecimal"/>
+        <Element Offset="824" Vartype="Pointer" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="832" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="836" Vartype="Pointer" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="848" Vartype="4 Bytes" Bytesize="4" RLECount="5" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="868" Vartype="Pointer" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="880" Vartype="4 Bytes" Bytesize="4" RLECount="2" DisplayMethod="Hexadecimal"/>
+        <Element Offset="888" Vartype="Pointer" Bytesize="4" RLECount="2" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="896" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="900" Vartype="Pointer" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="912" Vartype="4 Bytes" Bytesize="4" RLECount="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="928" Vartype="Double" Bytesize="8" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="936" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="940" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="944" Vartype="Float" Bytesize="4" RLECount="3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="956" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="960" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="964" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="968" Vartype="Double" Bytesize="8" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="976" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="980" Vartype="4 Bytes" Bytesize="4" RLECount="305" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2200" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="2204" Vartype="4 Bytes" Bytesize="4" RLECount="26" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2308" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="2312" Vartype="4 Bytes" Bytesize="4" RLECount="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2328" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="2332" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2336" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Hexadecimal"/>
+        <Element Offset="2340" Vartype="4 Bytes" Bytesize="4" RLECount="5" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2360" Vartype="Pointer" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2364" Vartype="4 Bytes" Bytesize="4" RLECount="14" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2420" Vartype="Double" Bytesize="8" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="2428" Vartype="4 Bytes" Bytesize="4" RLECount="417" DisplayMethod="Unsigned Integer"/>
       </Elements>
     </Structure>
   </Structures>
-  <Comments>Info about this table:
-</Comments>
 </CheatTable>
