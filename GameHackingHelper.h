@@ -1,4 +1,5 @@
 #pragma once
+
 #pragma comment( lib, "Kernel32" )
 #pragma comment( lib, "User32" )
 #include <Windows.h>
@@ -221,23 +222,73 @@ public:
 		address = 0;
 	}
 
-	bool loadByModulePattern(HANDLE processHandle, uintptr_t moduleBaseAddress, unsigned char* pattern, int length)
+	void removeSpaces(char* str)
 	{
+		int l = strlen(str)-1;
+		int c = 0;
+		for (int i = 0; i < l; i++)
+		{
+			if (str[i] == 32)
+			{
+				for (c = i; c < l; c++)
+				{
+					str[c] = str[c + 1];
+				}
+				str[l] = 0;
+				l--;
+			}
+		}
+		
+	}
+
+	bool loadByModulePattern(HANDLE processHandle, uintptr_t moduleBaseAddress,const char* pattern)
+	{
+		this->address = 0;
 		this->processHandle = processHandle;
+		char* workpattern = (char*)calloc(strlen(pattern)+1, sizeof(char));
+		memcpy(workpattern, pattern, strlen(pattern));
+		removeSpaces(workpattern);
+		
 		unsigned char tmp = 0;
 		uintptr_t addr = moduleBaseAddress;
 		int i;
-		unsigned char* arr = (unsigned char*)calloc(length, sizeof(char));
+		int patlen = strlen(workpattern);
+		int numberOfBytes = patlen / 2;
+		bool* skip = (bool*)calloc(numberOfBytes+1, sizeof(bool));
+		unsigned char* bytes = (unsigned char*)calloc(numberOfBytes+1, sizeof(unsigned char));
+		int k = 0;
+		char tmpn[4] = { 0 };
+		unsigned int tnb = 0;
+		
+		for (i = 0; i+1 < patlen; i+=2)
+		{
+			if (workpattern[i] == '?' || workpattern[i + 1] == '?')
+			{
+				skip[k] = false;
+				bytes[k] = 0;
+			}
+			else
+			{
+				tmpn[0] = workpattern[i];
+				tmpn[1] = workpattern[i+1];
+				skip[k] = true;
+				sscanf(tmpn,"%2x", &tnb);
+				bytes[k] = (unsigned char)tnb;
+			}
+			k++;
+		}
+		
+		unsigned char* arr = (unsigned char*)calloc(numberOfBytes+1, sizeof(char));
 		while (ReadProcessMemory(processHandle, (void*)addr, &tmp, sizeof(char), 0))
 		{
-			if (tmp == pattern[0])
+			if (tmp == bytes[0] || !skip[0])
 			{
-				if (ReadProcessMemory(processHandle, (void*)addr, arr, sizeof(char)*length, 0))
+				if (ReadProcessMemory(processHandle, (void*)addr, arr, sizeof(char)*numberOfBytes, 0))
 				{
 					i = 0;
-					for (i = 0; i < length; i++)
+					for (i = 0; i < numberOfBytes; i++)
 					{
-						if (arr[i]!=pattern[i])
+						if (arr[i]!= bytes[i]&&skip[i])
 						{
 							i = 0;
 							break;
@@ -246,15 +297,22 @@ public:
 					if (i != 0)
 					{
 						this->address = addr;
-						free(arr);
-						return true;
+						break;
 					}
 				}
 			}
 			addr++;
 		}
+		
+		free(skip);
+		free(bytes);
 		free(arr);
-		return false;
+		free(workpattern);
+		if (this->address == 0)
+		{
+			return false;
+		}
+		return true;
 	}
 
 	void load(HANDLE processHandle, uintptr_t address)
