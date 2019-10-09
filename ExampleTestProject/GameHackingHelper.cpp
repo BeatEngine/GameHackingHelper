@@ -1,7 +1,9 @@
 // GameHackingHelper.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
 //
-
 #include "pch.h"
+#define _CRT_SECURE_NO_WARNINGS
+#define _CONTROL_FLOW_GUARD_SHADOW_STACK_SUPPORTED 1
+#pragma warning(disable : 4996)
 #include <inttypes.h>
 #include <iostream>
 #include "GameHackingHelper.h"
@@ -70,8 +72,8 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 		n = i;
 
 		float x = entX[n] - playerX;
-		float y = entY[n] - playerY -7;
-		float z = entZ[n] - playerZ;
+		float y = entY[n] - playerY;
+		float z = entZ[n] +1.3 - playerZ;
 		yawc = 0;
 		pitchc = 0;
 
@@ -79,7 +81,7 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 		yawc = acosf(x / sqrtf(x*x + y * y));
 		pitchc = asinf(z / dist);
 
-		yawc = yawc / 3.141592 * 180;
+		yawc = yawc / 3.141592 * 180 /*+300/dist*/;
 		pitchc = pitchc / 3.141592 * 180;
 
 
@@ -92,16 +94,13 @@ void aimToNearest(float playerX, float playerY, float playerZ, float* entX, floa
 
 		if (dist<1999&&dist>2)
 		{
-			if (posf(preyaw - yawc) < angbefy && posf(preyaw - yawc) < 60)
+			if (posf(preyaw - yawc) < angbefy  && posf(preyaw - yawc) < 60 && posf(prepitch - pitchc) < 20)
 			{
-				if (posf(prepitch - pitchc) < angbefp)
-				{
-					angbefy = posf(preyaw - yawc);
-					angbefp = posf(prepitch - pitchc);
-					nd = dist;
-					*yaw = yawc;
-					*pitch = pitchc;
-				}
+				angbefy = posf(preyaw - yawc);
+				angbefp = posf(prepitch - pitchc);
+				nd = dist;
+				*yaw = yawc;
+				*pitch = pitchc;
 			}
 		}
 
@@ -124,22 +123,19 @@ int main()
 		uintptr_t server = getmoduleaddress(csgo, (char*)"server.dll");
 		printf("Loading Baseaddresses by patterns wait a minute!\n");
 		ProcessAddress PlayerServerBase = ProcessAddress(csgo);
-		unsigned char pservpatt[] = {0xD0, 0x8E, 0x2D, 0x4E, 0xFA, 0x76};
-		if (!PlayerServerBase.loadByModulePattern(csgo, server, pservpatt, 6))
+		if (!PlayerServerBase.loadByModulePattern(csgo, server, (char*)"?? ?? ?? ?? FA 76 00 00"))
 		{
 			printf("Could not find PlayerServerBase!");
 			return 0;
 		}
 		ProcessAddress PlayerEngineBase = ProcessAddress(csgo);
-		unsigned char pengpatt[] = { 0xD0, 0x53, 0x74, 0x11, 0x90, 0xE8, 0x85, 0x11, 0x01};
-		if (!PlayerEngineBase.loadByModulePattern(csgo, engine, pengpatt, 9))
+		if (!PlayerEngineBase.loadByModulePattern(csgo, engine, (char*)"D0 53 ?? 11 90 E8 ?? 11 01"))
 		{
 			printf("Could not find PlayerEngineBase!");
 			return 0;
 		}
 		ProcessAddress EntityListBase = ProcessAddress(csgo);
-		unsigned char elstpatt[] = { 0x74, 0x72, 0x7D, 0x68, 0x00, 0x00};
-		if (!EntityListBase.loadByModulePattern(csgo, server, elstpatt, 6))
+		if (!EntityListBase.loadByModulePattern(csgo, server, (char*)"74 72 ?? ?? 00 00 00 00 38 1D"))
 		{
 			printf("Could not find EntityListBase!");
 			return 0;
@@ -211,7 +207,7 @@ int main()
 			if (GetAsyncKeyState(VK_MBUTTON))
 			{
 				aimToNearest(px, py, pz, entX, entY, entZ, 10, &yaw, &pitch,1);
-				printf(" calc: (%f %f)      ", yaw, pitch);
+				printf(" calc: (%f %f)     ", yaw, pitch);
 				playerPitch.write<float>(pitch);
 				playerYaw.write<float>(yaw);
 				while (GetAsyncKeyState(VK_MBUTTON))
