@@ -1,7 +1,9 @@
 #pragma
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 bool strwcmp(char* str, wchar_t* wstr)
 {
@@ -37,13 +39,16 @@ bool strwcmp(char* str, wchar_t* wstr)
     return true;
 }
 
-#ifdef linux
+#ifdef __linux__ 
+
+#define uintptr_t unsigned long long
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <dirent.h>
 #include <sys/fcntl.h>
 #include <sys/sysctl.h>
-
+#include <unistd.h>
 #define HANDLE long
 
 int GetProcessFileName(long processHandle, char* name)
@@ -55,22 +60,24 @@ int GetProcessFileName(long processHandle, char* name)
         printf("Process lookup failed!\n");
         return 0;
     }
-    while ((proc = readdir(proc)) != 0)
+	dirent* tproc;
+    while ((tproc = readdir(proc)) != 0)
     {
-        if(atoi(proc->d_name) != 0)
+        if(atoi(tproc->d_name) != 0)
         {
-            sprintf(process_dir_out, "/proc/%s/mem", proc->d_name);
+			char process_dir_out[512] = {0};
+            sprintf(process_dir_out, "/proc/%s/mem", tproc->d_name);
             char statdir[512] = {0};
-            sprintf(statdir, "/proc/%s/status", proc->d_name);
+            sprintf(statdir, "/proc/%s/status", tproc->d_name);
             long handle = open(process_dir_out, O_RDONLY);
             if(handle == processHandle)
             {
-                char* fdata = calloc(sizeof(char),128);
+                char* fdata = (char*)calloc(sizeof(char),128);
                 if(read(handle, fdata, 128)) {
                     char buff[128] = {0};
                     close(handle);
                     closedir(proc);
-                    strcpy(name, fdata)
+                    strcpy(name, fdata);
                     free(fdata);
                     return 1;
                 }
@@ -91,27 +98,29 @@ long attach(char* ProcessName, int* pid)
         printf("Process lookup failed!\n");
         return 0;
     }
-    while ((proc = readdir(proc)) != 0)
+	dirent* tproc;
+    while ((tproc = readdir(proc)) != 0)
     {
-        if(atoi(proc->d_name) != 0)
+        if(atoi(tproc->d_name) != 0)
         {
             char process_dir_out[512] = {0};
-            sprintf(process_dir_out, "/proc/%s/mem", proc->d_name);
+            sprintf(process_dir_out, "/proc/%s/mem", tproc->d_name);
             char statdir[512] = {0};
-            sprintf(statdir, "/proc/%s/status", proc->d_name);
+            sprintf(statdir, "/proc/%s/status", tproc->d_name);
             long handle = open(process_dir_out, O_RDONLY);
             if(handle >= 0)
             {
-                char* fdata = calloc(sizeof(char),128);
+                char* fdata = (char*)calloc(sizeof(char),128);
                 if(read(handle, fdata, 128)) {
                     char buff[128] = {0};
                     close(handle);
+					printf("debug: %s\n", fdata);
                     if (strstr(fdata, ProcessName) != 0)
                     {
-                        *pid = atol(proc->d_name);
+                        *pid = atol(tproc->d_name);
 
                         char BaseRegion[1024] = {0};
-                        sprintf(BaseRegion, "/proc/%s/mem",proc->d_name);
+                        sprintf(BaseRegion, "/proc/%s/mem",tproc->d_name);
                         handle = open(BaseRegion, O_RDWR);
                         if(handle>0)
                         {
@@ -138,7 +147,7 @@ void detach(long processHandle)
     close(processHandle);
 }
 
-long getmoduleaddress(long processHandle, char* processModuleName)
+uintptr_t getmoduleaddress(long processHandle, char* processModuleName)
 {
     char FileLocation[1024] = {0};
     char BaseAddress[1024] = {0};
@@ -155,7 +164,7 @@ long getmoduleaddress(long processHandle, char* processModuleName)
             {
                 if((ptr = strstr(FileBuffer, processModuleName)) != 0)
                 {
-                    while(*prr != '\n' && ptr >= FileBuffer)
+                    while(*ptr != '\n' && ptr >= FileBuffer)
                     {
                         ptr--;
                     }
@@ -166,8 +175,8 @@ long getmoduleaddress(long processHandle, char* processModuleName)
                         BaseAddress[i] = *ptr;
                         ptr++;
                     }
-                    long ret = 0;
-                    sscanf(BaseAddress, "%x", &ret);
+                    uintptr_t ret = 0;
+                    sscanf(BaseAddress, "%" PRIxPTR, &ret);
                     return ret;
                 }
                 else
@@ -177,11 +186,12 @@ long getmoduleaddress(long processHandle, char* processModuleName)
             }
         }
     }
+	return 0;
 }
 
-bool ReadProcessMemory(long processHandle , uintptr_t address, void* buffer, size_t size, int unused)
+bool ReadProcessMemory(long processHandle , void* address, void* buffer, size_t size, int unused)
 {
-    lseek(processHandle, address, SEEK_SET);
+    lseek(processHandle, (uintptr_t)address, SEEK_SET);
     if(write(processHandle, buffer, size))
     {
         lseek(processHandle, 0, SEEK_SET);
@@ -191,9 +201,9 @@ bool ReadProcessMemory(long processHandle , uintptr_t address, void* buffer, siz
     return false;
 }
 
-bool WriteProcessMemory(long processHandle , uintptr_t address, void* buffer, size_t size, int unused)
+bool WriteProcessMemory(long processHandle , void* address, void* buffer, size_t size, int unused)
 {
-    lseek(processHandle, address, SEEK_SET);
+    lseek(processHandle, (uintptr_t)address, SEEK_SET);
     if(read(processHandle, buffer, size))
     {
         lseek(processHandle, 0, SEEK_SET);
