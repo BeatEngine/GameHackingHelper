@@ -51,6 +51,33 @@ bool strwcmp(char* str, wchar_t* wstr)
 #include <unistd.h>
 #define HANDLE long
 
+void ProcessnameByStatus(char* status_path, char* name_out)
+{
+	char data[200] = {0};
+	long f = open(status_path,O_RDONLY);
+	read(f,data,200);
+	close(f);
+	int o = 0;
+	for(int i = 0; i < 200; i++)
+	{
+		if(data[i]=='\n')
+		{
+			o = i;
+			while (data[i]!=':'&&i>0)
+			{
+				i--;
+			}
+			i++;
+			while ((data[i]==' '||data[i]=='\t')&&i<200)
+			{
+				i++;
+			}
+			strncpy(name_out,(data+i),o-i);
+			break;
+		}
+	}
+}
+
 int GetProcessFileName(long processHandle, char* name)
 {
     DIR* proc = opendir("/proc/");
@@ -72,12 +99,11 @@ int GetProcessFileName(long processHandle, char* name)
             long handle = open(process_dir_out, O_RDONLY);
             if(handle == processHandle)
             {
-                char* fdata = (char*)calloc(sizeof(char),128);
-                if(read(handle, fdata, 128)) {
-                    char buff[128] = {0};
+                char* fdata = (char*)calloc(sizeof(char),201);
+                if(read(handle, fdata, 200)) {
                     close(handle);
-                    closedir(proc);
-                    strcpy(name, fdata);
+					ProcessnameByStatus(statdir , name);
+					closedir(proc);
                     free(fdata);
                     return 1;
                 }
@@ -98,42 +124,46 @@ long attach(char* ProcessName, int* pid)
         printf("Process lookup failed!\n");
         return 0;
     }
-	dirent* tproc;
+	struct dirent* tproc;
     while ((tproc = readdir(proc)) != 0)
     {
         if(atoi(tproc->d_name) != 0)
         {
+			//printf("debug2: '%s'\n", tproc->d_name);
             char process_dir_out[512] = {0};
             sprintf(process_dir_out, "/proc/%s/mem", tproc->d_name);
             char statdir[512] = {0};
             sprintf(statdir, "/proc/%s/status", tproc->d_name);
-            long handle = open(process_dir_out, O_RDONLY);
-            if(handle >= 0)
+			char prcnam[200] = {0};
+			ProcessnameByStatus(statdir , prcnam);
+            if(strwcmp(prcnam, ProcessName))
             {
-                char* fdata = (char*)calloc(sizeof(char),128);
-                if(read(handle, fdata, 128)) {
-                    char buff[128] = {0};
-                    close(handle);
-					printf("debug: %s\n", fdata);
-                    if (strstr(fdata, ProcessName) != 0)
-                    {
-                        *pid = atol(tproc->d_name);
-
-                        char BaseRegion[1024] = {0};
-                        sprintf(BaseRegion, "/proc/%s/mem",tproc->d_name);
-                        handle = open(BaseRegion, O_RDWR);
-                        if(handle>0)
-                        {
-                            free(fdata);
-                            closedir(proc);
-                            return handle;
-                        }
-                        else
-                        {
-                            printf("Error open process failed!\n");
-                        }
-                    }
-                }
+				printf("found: '%s' (%d)\n", prcnam, *pid);
+				long handle = 0;//open(process_dir_out, O_RDWR);
+                char* fdata = (char*)calloc(sizeof(char),201);
+				if(true)
+				{
+		
+				char buff[128] = {0};
+				//close(handle);
+				
+				printf("Attached to %s!\n", prcnam);
+				*pid = atol(tproc->d_name);
+				char BaseRegion[1024] = {0};
+				sprintf(BaseRegion, "/proc/%s/mem",tproc->d_name);
+				handle = open(BaseRegion, O_RDWR);
+				if(handle>0)
+				{
+					free(fdata);
+					closedir(proc);
+					return handle;
+				}
+				else
+				{
+					printf("Error open process failed!\n");
+				}
+						
+				}
                 free(fdata);
             }
         }
