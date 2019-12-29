@@ -148,17 +148,17 @@ uintptr_t getmoduleaddress(HANDLE processHandle, char* processModuleName)
 		}*/
 
 
-		if (EnumProcessModules(processHandle, NULL, 0, &bytesRequired))
+		if (EnumProcessModulesEx(processHandle, NULL, 0, &bytesRequired, LIST_MODULES_ALL))
 		{
 			if (bytesRequired)
 			{
 				moduleArrayBytes = (uintptr_t)LocalAlloc(LPTR, bytesRequired);
 				if (moduleArrayBytes)
 				{
-					moduleCount = bytesRequired / sizeof(HMODULE);
+					moduleCount = bytesRequired / 8;
 					moduleArray = (HMODULE*)moduleArrayBytes;
 
-					if (EnumProcessModules(processHandle, moduleArray, bytesRequired, &bytesRequired))
+					if (EnumProcessModulesEx(processHandle, moduleArray, bytesRequired, &bytesRequired, LIST_MODULES_ALL))
 					{
 						wchar_t tModuleName[300];
 						for (int i = 0; i < moduleCount; i++)
