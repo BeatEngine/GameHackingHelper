@@ -47,6 +47,26 @@ bool strwcmp(char* str, wchar_t* wstr)
 	return true;
 }
 
+char* strwcopy(wchar_t* wstr)
+{
+	int i = 0;
+	while (i < 10000)
+	{
+		if (wstr[i] == 0)
+		{
+			break;
+		}
+		i++;
+	}
+	char* result = (char*)calloc(i + 1, sizeof(char));
+	for (int c = 0; c < i; c++)
+	{
+		result[c] = (char)(int)(wstr[c]);
+	}
+	result[i] = 0;
+	return result;
+}
+
 int GetProcessFileName(HANDLE processHandle, wchar_t* name)
 {
 	wchar_t path[400] = { 0 };
@@ -95,14 +115,17 @@ HANDLE attach(char* ProcessName, int* outPID)
 			{
 				memset(pname, 0, sizeof(wchar_t)*199);
 				pnameSz = GetProcessFileName(tmph, pname);
+				char* res = strwcopy(pname);
 				if (pnameSz > 0)
 				{
-					if (strwcmp(ProcessName, pname))
+					if (strcmp(ProcessName, res)==0)
 					{
 						free(pids);
+						free(res);
 						return tmph;
 					}
 				}
+				free(res);
 				CloseHandle(tmph);
 			}
 		}
